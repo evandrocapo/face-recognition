@@ -1,0 +1,27 @@
+## Passo 1: Criar caracteristicas do rosto
+
+python extract_embeddings.py --dataset dataset \
+	--embeddings output/embeddings.pickle \
+	--detector face_detection_model \
+	--embedding-model openface_nn4.small2.v1.t7
+
+## Passo 2: Treinar modelo de reconhecimento
+
+python train_model.py --embeddings output/embeddings.pickle \
+	--recognizer output/recognizer.pickle \
+	--le output/le.pickle
+
+## Passo 3: Para reconhecer a pessoa em foto
+
+python recognize.py --detector face_detection_model \
+	--embedding-model openface_nn4.small2.v1.t7 \
+	--recognizer output/recognizer.pickle \
+	--le output/le.pickle \
+	--image images/adrian.jpg
+
+## Passo 4: Para reconhecer a pessoa em video 
+
+python recognize_video.py --detector face_detection_model \
+	--embedding-model openface_nn4.small2.v1.t7 \
+	--recognizer output/recognizer.pickle \
+	--le output/le.pickle
